@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+
+use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
