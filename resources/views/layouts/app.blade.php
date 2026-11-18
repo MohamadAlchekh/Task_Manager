@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Task Manager</title>
     <style>
         body { font-family: Arial, sans-serif; background: #f4f5f7; margin: 0; }
@@ -15,11 +16,13 @@
         .error { color: #c0392b; margin: 4px 0; }
         li { display: flex; justify-content: space-between; align-items: center; }
         .actions { display: flex; gap: 8px; align-items: center; }
+        .handle { cursor: grab; margin-right: 10px; color: #999; }
     </style>
 </head>
 <body>
     <main>
         @yield('content')
     </main>
+    @stack('scripts')
 </body>
 </html>

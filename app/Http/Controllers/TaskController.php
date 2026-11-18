@@ -7,6 +7,8 @@ use App\Models\Task;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;   
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ReorderTasksRequest;
+use Illuminate\Http\Response;
 
 class TaskController extends Controller
 {
@@ -48,5 +50,15 @@ class TaskController extends Controller
     });
 
         return redirect()->route('tasks.index');
+    }
+    public function reorder(ReorderTasksRequest $request): Response
+    {
+        DB::transaction(function () use ($request) {
+            foreach ($request->validated('order') as $position => $id) {
+                Task::whereKey($id)->update(['priority' => $position + 1]);
+            }
+        });
+
+        return response()->noContent();
     }
 }

@@ -13,10 +13,13 @@
         <p class="error">{{ $message }}</p>
     @enderror
 
-    <ul>
+    <ul id="task-list">
         @forelse ($tasks as $task)
-            <li>
-                <span>#{{ $task->priority }} {{ $task->name }}</span>
+            <li data-id="{{ $task->id }}">
+                <span>
+                    <span class="handle">&#9776;</span>
+                    <span class="priority">#{{ $task->priority }}</span> {{ $task->name }}
+                </span>
                 <span class="actions">
                     <a href="{{ route('tasks.edit', $task) }}">Edit</a>
                     <form method="POST" action="{{ route('tasks.destroy', $task) }}">
@@ -26,8 +29,43 @@
                     </form>
                 </span>
             </li>
-            @empty
+        @empty
             <li>No tasks yet.</li>   
         @endforelse
     </ul>
 @endsection
+
+@push('scripts')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
+    <script>
+        const list = document.getElementById('task-list');
+        const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+        Sortable.create(list, {
+            handle: '.handle',
+            draggable: 'li[data-id]',
+            animation: 150,
+            onEnd: async () => {
+                const order = [...list.querySelectorAll('li[data-id]')].map(li => li.dataset.id);
+
+                const response = await fetch('{{ route('tasks.reorder') }}', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': csrfToken,
+                    },
+                    body: JSON.stringify({ order }),
+                });
+
+                if (!response.ok) {
+                    alert('Could not save the new order.');
+                    location.reload();
+                    return;
+                }
+
+                list.querySelectorAll('.priority').forEach((el, i) => el.textContent = '#' + (i + 1));
+            },
+        });
+    </script>
+@endpush
