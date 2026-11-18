@@ -13,6 +13,8 @@
         ul { list-style: none; padding: 0; }
         li { background: #fff; padding: 10px 12px; margin-bottom: 6px; border-radius: 4px; }
         .error { color: #c0392b; margin: 4px 0; }
+        li { display: flex; justify-content: space-between; align-items: center; }
+        .actions { display: flex; gap: 8px; align-items: center; }
     </style>
 </head>
 <body>

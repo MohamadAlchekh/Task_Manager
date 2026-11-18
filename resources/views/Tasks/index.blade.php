@@ -15,9 +15,19 @@
 
     <ul>
         @forelse ($tasks as $task)
-            <li>#{{ $task->priority }} {{ $task->name }}</li>
-        @empty
-            <li>No tasks yet.</li>
+            <li>
+                <span>#{{ $task->priority }} {{ $task->name }}</span>
+                <span class="actions">
+                    <a href="{{ route('tasks.edit', $task) }}">Edit</a>
+                    <form method="POST" action="{{ route('tasks.destroy', $task) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
+                </span>
+            </li>
+            @empty
+            <li>No tasks yet.</li>   
         @endforelse
     </ul>
 @endsection
