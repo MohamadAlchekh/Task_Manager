@@ -10,6 +10,7 @@
         main { max-width: 600px; margin: 40px auto; padding: 0 16px; }
         form.create { display: flex; gap: 8px; margin-bottom: 16px; }
         input[type=text] { flex: 1; padding: 8px; }
+        select { padding: 8px; }
         button { padding: 8px 14px; cursor: pointer; }
         ul { list-style: none; padding: 0; }
         li { background: #fff; padding: 10px 12px; margin-bottom: 6px; border-radius: 4px; }

@@ -8,7 +8,7 @@
         @method('PUT')
         <input type="text" name="name" value="{{ old('name', $task->name) }}" required>
         <button type="submit">Save</button>
-        <a href="{{ route('tasks.index') }}">Cancel</a>
+        <a href="{{ route('tasks.index', ['project' => $task->project_id]) }}">Cancel</a>
     </form>
 
     @error('name')
