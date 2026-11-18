@@ -13,6 +13,16 @@
         </select>
     </form>
 
+    <form class="create" method="POST" action="{{ route('projects.store') }}">
+        @csrf
+        <input type="text" name="project_name" value="{{ old('project_name') }}" placeholder="New project" required>
+        <button type="submit">Add project</button>
+    </form>
+
+    @error('project_name')
+        <p class="error">{{ $message }}</p>
+    @enderror
+
     @if ($project)
         <form class="create" method="POST" action="{{ route('tasks.store') }}">
             @csrf
@@ -46,7 +56,7 @@
             @endforelse
         </ul>
     @else
-        <p>No projects yet. Run <code>php artisan db:seed</code>.</p>
+        <p>No projects yet. Add one above.</p>
     @endif
 @endsection
 
